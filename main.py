@@ -90,16 +90,17 @@ class MyInputData(InputData):
         labels = labels.reshape([-1,1])
         
         data_array = self.get_array()
-        
+
+        # (L, 1) array attaches to (L, 7) array
         labels_and_data = np.hstack([labels, data_array])
         train_labels_and_data, test_labels_and_data = train_test_split(labels_and_data, shuffle=shuffle)
-        
+
         train_labels = train_labels_and_data[:, 0]
         train_data = train_labels_and_data[:, 1:]
         test_labels = test_labels_and_data[:, 0]
         test_data = test_labels_and_data[:, 1:]
         
-        # cast from float to int
+        # cast np.array from float to int
         train_labels = train_labels.astype(int)
         test_labels = test_labels.astype(int)
         
