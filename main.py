@@ -31,7 +31,7 @@ class InputData(object):
         self.variables, self.data = self.load_data(dirname)
                 
     def load_data(self, dirname):
-        with open(train_dirname, 'r') as f:
+        with open(dirname, 'r') as f:
             reader = csv.reader(f)
             contents = list(reader)
         
@@ -62,7 +62,7 @@ class MyInputData(InputData):
         elif var == 'Embarked':
             d = {'C':0, 'Q':1, 'S': 2, '': 3}
             data_row = [d[_] for _ in data_row]
-        elif var in ['Pclass', 'SibSp', 'Parch']:
+        elif var in ['Pclass', 'SibSp', 'Parch', 'PassengerId']:
             data_row = [int(_) for _ in data_row]
         else:
             # 今後の改善点：ゴミデータを含む場合は除去したした方が良い。
@@ -106,7 +106,6 @@ class MyInputData(InputData):
         return train_labels, train_data, test_labels, test_data
         
 
-    
 input_data = MyInputData(train_dirname)
 labels = input_data.get_labels()
 data_array = input_data.get_array()
@@ -171,6 +170,8 @@ data_array = input_data.get_array()
 
 ids = input_data.get_row('PassengerId')
 ids = [int(_) for _ in ids]
+
+print(ids[:10])
 
 predicted = clf.predict(data_array)
 
